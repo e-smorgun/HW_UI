@@ -38,28 +38,29 @@ class secondViewController: UIViewController {
             let xPosition: Int = .random(in: 0...Int(screenWidth) - 40)
             let yPosition: Int = .random(in: 40...Int(screenHeight) - 160)
             
+            let rect = CGRect(x: xPosition , y: yPosition, width: 40, height: 40)
             views[index].frame = CGRect(x: xPosition, y: yPosition, width: 40, height: 40)
             
             for i in 0..<index {
-                let point = CGPoint(x: xPosition , y: yPosition)
-                let point2 = CGPoint(x: xPosition + 40 , y: yPosition)
-                let point3 = CGPoint(x: xPosition , y: yPosition + 40)
-                let point4 = CGPoint(x: xPosition + 40 , y: yPosition + 40)
-
-                let isPointInRect = views[index].bounds.contains(point)
-                let isPointInRect2 = views[index].bounds.contains(point2)
-                let isPointInRect3 = views[index].bounds.contains(point3)
-                let isPointInRect4 = views[index].bounds.contains(point4)
-
-                print(isPointInRect)
+                var isRectInRect = false
                 
-                if isPointInRect == false && isPointInRect2 == false && isPointInRect3 == false && isPointInRect4 == false {
-                    self.view.addSubview(views[index])
-                    views[index].backgroundColor = random()
+                let rectToCompare = CGRect(x: views[i].frame.minX, y: views[i].frame.minY, width: 40, height: 40)
+                isRectInRect = rect.intersects(rectToCompare)
+                print(isRectInRect)
+                
+                if isRectInRect == true {
+                    views[index].frame = CGRect(x: 5000, y: 5000, width: 40, height: 40)
+                    
+                } else {
+                    
                 }
             }
-            
-
+            print()
+        }
+        
+        for index in 0..<views.count {
+            self.view.addSubview(views[index])
+            views[index].backgroundColor = random()
         }
     }
     
